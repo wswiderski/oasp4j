@@ -72,7 +72,11 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
 
         // activate crsf check for a selection of urls (but not for login & logout)
-        .csrf().requireCsrfProtectionMatcher(new CsrfRequestMatcher()).and()
+        //.csrf().requireCsrfProtectionMatcher(new CsrfRequestMatcher()).and()
+        .csrf().disable()
+
+        // add basic htp autentication
+        .httpBasic().and()
 
         // configure parameters for simple form login (and logout)
         .formLogin().successHandler(new SimpleUrlAuthenticationSuccessHandler()).defaultSuccessUrl("/")
