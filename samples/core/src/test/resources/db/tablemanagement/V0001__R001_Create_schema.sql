@@ -135,17 +135,7 @@ CREATE TABLE RevInfo(
   userLogin VARCHAR(255)
 );
 
--- Supplier
-CREATE TABLE Supplier(
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    modificationCounter INTEGER NOT NULL,
-    name VARCHAR(255),
-    description VARCHAR(255),
-    rate INTEGER,
-    CONSTRAINT PK_Supplier PRIMARY KEY(id),
-    CONSTRAINT UC_Supplier_name UNIQUE(name)
-);
-
+-- Special --
 CREATE TABLE Special(
     id BIGINT NOT NULL AUTO_INCREMENT,
     modificationCounter INTEGER NOT NULL,
