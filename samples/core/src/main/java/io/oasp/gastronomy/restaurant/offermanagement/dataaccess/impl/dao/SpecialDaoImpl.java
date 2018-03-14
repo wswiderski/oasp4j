@@ -3,13 +3,11 @@ package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.impl.dao;
 import com.querydsl.core.alias.Alias;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.jpa.impl.JPAQuery;
-import io.oasp.gastronomy.restaurant.general.common.api.DateTimeHelper;
+import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.SpecialEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.SpecialDao;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialSearchCriteriaTo;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Named;
 import java.time.DayOfWeek;
@@ -20,9 +18,6 @@ import static com.querydsl.core.alias.Alias.$;
 
 @Named
 public class SpecialDaoImpl extends ApplicationMasterDataDaoImpl<SpecialEntity> implements SpecialDao {
-
-  @Autowired
-  private DateTimeHelper dateTimeHelper;
 
   /**
    * The constructor.
@@ -38,9 +33,10 @@ public class SpecialDaoImpl extends ApplicationMasterDataDaoImpl<SpecialEntity> 
     return SpecialEntity.class;
   }
 
-  public List<SpecialEntity> findActiveSpecials(LocalDateTime dateTimeToCheck) {
-    DayOfWeek currentDayOfWeek = dateTimeToCheck.getDayOfWeek();
-    int currentHour = dateTimeToCheck.getHour();
+  @Override
+  public List<SpecialEntity> findActiveSpecials(SpecialSearchCriteriaTo criteria) {
+    DayOfWeek currentDayOfWeek = criteria.getDateOfCheckingOffers().getDayOfWeek();
+    int currentHour = criteria.getDateOfCheckingOffers().getHour();
 
     SpecialEntity special = Alias.alias(SpecialEntity.class);
     EntityPathBase<SpecialEntity> alias = $(special);
@@ -51,20 +47,21 @@ public class SpecialDaoImpl extends ApplicationMasterDataDaoImpl<SpecialEntity> 
     return query.fetch();
   }
 
-  public OfferEntity findBestActiveSpecial(SpecialSearchCriteriaTo criteria) {
+  @Override
+  public Money findBestActiveSpecial(SpecialSearchCriteriaTo criteria) {
     SpecialEntity special = Alias.alias(SpecialEntity.class);
     EntityPathBase<SpecialEntity> alias = $(special);
     JPAQuery<SpecialEntity> query = new JPAQuery<SpecialEntity>(getEntityManager()).from(alias);
-    LocalDateTime currentDateTime = dateTimeHelper.now();
-    if(criteria.getOfferNumber() != null) {
+    LocalDateTime currentDateTime = criteria.getDateOfCheckingOffers();
+    if (criteria.getOfferNumber() != null) {
       query.where($(special.getOffer().getNumber()).eq(criteria.getOfferNumber()));
     }
     this.buldQueryForDateInActivePeriod(currentDateTime.getDayOfWeek(), currentDateTime.getHour(), special, query);
 
     query.orderBy($(special.getSpecialPrice()).asc());
-    SpecialEntity specialEntityWithBestPrice = query.fetchOne();
+    SpecialEntity specialEntityWithBestPrice = query.fetchFirst();
 
-    return specialEntityWithBestPrice != null ? specialEntityWithBestPrice.getOffer() : null;
+    return specialEntityWithBestPrice != null ? specialEntityWithBestPrice.getSpecialPrice() : null;
   }
 
   private void buldQueryForDateInActivePeriod(DayOfWeek currentDayOfWeek, int currentHour, SpecialEntity special, JPAQuery<SpecialEntity> query) {

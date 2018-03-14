@@ -2,9 +2,14 @@ package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.WeeklyPeriodEmbeddable;
 import io.oasp.module.jpa.common.api.to.SearchCriteriaTo;
 
+import java.time.LocalDateTime;
+
+/**
+ * Criteria for searching @{@link io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.SpecialEntity}
+ * Contains information about OfferNumber to find by and date of checking for special offer to check if there is sth active.
+ */
 public class SpecialSearchCriteriaTo extends SearchCriteriaTo {
   /** UID for serialization. */
   private static final long serialVersionUID = 1L;
@@ -13,7 +18,7 @@ public class SpecialSearchCriteriaTo extends SearchCriteriaTo {
 
   private OfferEntity offer;
 
-  private WeeklyPeriodEmbeddable activePeriod;
+  private LocalDateTime dateOfCheckingOffers;
 
   private Money specialPrice;
 
@@ -39,12 +44,12 @@ public class SpecialSearchCriteriaTo extends SearchCriteriaTo {
     this.offer = offer;
   }
 
-  public WeeklyPeriodEmbeddable getActivePeriod() {
-    return activePeriod;
+  public LocalDateTime getDateOfCheckingOffers() {
+    return dateOfCheckingOffers;
   }
 
-  public void setActivePeriod(WeeklyPeriodEmbeddable activePeriod) {
-    this.activePeriod = activePeriod;
+  public void setDateOfCheckingOffers(LocalDateTime dateOfCheckingOffers) {
+    this.dateOfCheckingOffers = dateOfCheckingOffers;
   }
 
   public Money getSpecialPrice() {
