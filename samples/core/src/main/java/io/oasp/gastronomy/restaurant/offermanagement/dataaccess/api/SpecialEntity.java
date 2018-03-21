@@ -18,10 +18,6 @@ public class SpecialEntity extends ApplicationPersistenceEntity implements Speci
 
   private Money specialPrice;
 
-  public SpecialEntity() {
-    super();
-  }
-
   @Column(unique = true)
   public String getName() {
     return name;

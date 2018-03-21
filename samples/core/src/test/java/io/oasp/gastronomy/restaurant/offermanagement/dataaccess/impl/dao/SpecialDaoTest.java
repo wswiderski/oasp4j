@@ -1,5 +1,15 @@
 package io.oasp.gastronomy.restaurant.offermanagement.dataaccess.impl.dao;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+
+import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
 import io.oasp.gastronomy.restaurant.SpringBootApp;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity;
@@ -10,17 +20,6 @@ import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.SpecialD
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialSearchCriteriaTo;
 import io.oasp.module.test.common.base.ComponentTest;
 import net.sf.mmm.util.exception.api.ObjectNotFoundUserException;
-import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 @Transactional
 @SpringBootTest(classes = {SpringBootApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -47,7 +46,7 @@ public class SpecialDaoTest extends ComponentTest{
   @Test(expected = ObjectNotFoundUserException.class)
   public void testRemovingSpecialOffer() {
     // given
-    SpecialEntity special = this.prepareSpecialOffer();
+    SpecialEntity special = prepareSpecialOffer();
     SpecialEntity savedSpecialOffer = specialDao.save(special);
 
     // when
@@ -60,16 +59,15 @@ public class SpecialDaoTest extends ComponentTest{
   @Test
   public void testFindingAllSpecialOffers() {
     // given
-    OfferEntity offerEntity = this.prepareOffer();
-    SpecialEntity specialEntity1 = this.prepareSpecialWithOffer(offerEntity);
-    SpecialEntity specialEntity2 = this.prepareSpecialWithOffer(offerEntity);
+    OfferEntity offerEntity = prepareOffer();
+    SpecialEntity specialEntity1 = prepareSpecialWithOffer(offerEntity);
+    SpecialEntity specialEntity2 = prepareSpecialWithOffer(offerEntity);
     specialEntity2.setName("Special Entity 2");
     specialDao.save(Arrays.asList(specialEntity1, specialEntity2));
 
     // when
     List<SpecialEntity> foundSpecialEntities = specialDao.findAll();
-
-    assertThat(foundSpecialEntities).extracting("name").containsOnly(specialEntity1.getName(), specialEntity2.getName());
+    assertThat(foundSpecialEntities).containsOnly(specialEntity1, specialEntity2);
   }
 
   @Test
@@ -91,7 +89,7 @@ public class SpecialDaoTest extends ComponentTest{
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     LocalDateTime currentDateTime = LocalDateTime.of(2018,2,2,12,0);
     criteria.setDateOfCheckingOffers(currentDateTime);
-    SpecialEntity special = this.prepareSpecialOffer();
+    SpecialEntity special = prepareSpecialOffer();
     special.getActivePeriod().setStartingHour(currentDateTime.getHour());
     special.getActivePeriod().setEndingHour(currentDateTime.getHour()+2);
     special.getActivePeriod().setStartingDay(currentDateTime.getDayOfWeek());
@@ -102,7 +100,7 @@ public class SpecialDaoTest extends ComponentTest{
     List<SpecialEntity> currentlyActiveSpecials = specialDao.findActiveSpecials(criteria);
 
     // then
-    assertThat(currentlyActiveSpecials).extracting("id").containsOnly(savedSpecial.getId());
+    assertThat(currentlyActiveSpecials).containsOnly(savedSpecial);
   }
 
   @Test
@@ -110,7 +108,7 @@ public class SpecialDaoTest extends ComponentTest{
     // given
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     LocalDateTime currentDateTime = LocalDateTime.of(2018,2,2,12,0);
-    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = this.prepareSpecialOffer();
+    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = prepareSpecialOffer();
     special.getActivePeriod().setStartingHour(currentDateTime.getHour());
     special.getActivePeriod().setEndingHour(currentDateTime.getHour()+2);
     special.getActivePeriod().setStartingDay(currentDateTime.getDayOfWeek().minus(1));
@@ -121,7 +119,7 @@ public class SpecialDaoTest extends ComponentTest{
     List<SpecialEntity> currentlyActiveSpecials = specialDao.findActiveSpecials(criteria);
 
     // then
-    assertThat(currentlyActiveSpecials).extracting("id").containsOnly(savedSpecial.getId());
+    assertThat(currentlyActiveSpecials).containsOnly(savedSpecial);
   }
 
   @Test
@@ -129,7 +127,7 @@ public class SpecialDaoTest extends ComponentTest{
     // given
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     LocalDateTime currentDateTime = LocalDateTime.of(2018,2,2,12,0);
-    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = this.prepareSpecialOffer();
+    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = prepareSpecialOffer();
     special.getActivePeriod().setStartingHour(currentDateTime.getHour());
     special.getActivePeriod().setEndingHour(currentDateTime.getHour()+2);
     special.getActivePeriod().setStartingDay(currentDateTime.getDayOfWeek().minus(1));
@@ -140,7 +138,7 @@ public class SpecialDaoTest extends ComponentTest{
     List<SpecialEntity> currentlyActiveSpecials = specialDao.findActiveSpecials(criteria);
 
     // then
-    assertThat(currentlyActiveSpecials).extracting("id").containsOnly(savedSpecial.getId());
+    assertThat(currentlyActiveSpecials).containsOnly(savedSpecial);
   }
 
   @Test
@@ -148,7 +146,7 @@ public class SpecialDaoTest extends ComponentTest{
     // given
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     LocalDateTime currentDateTime = LocalDateTime.of(2018,2,2,12,0);
-    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = this.prepareSpecialOffer();
+    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = prepareSpecialOffer();
     special.getActivePeriod().setStartingHour(currentDateTime.getHour() - 2);
     special.getActivePeriod().setEndingHour(currentDateTime.getHour());
     special.getActivePeriod().setStartingDay(currentDateTime.getDayOfWeek());
@@ -159,7 +157,7 @@ public class SpecialDaoTest extends ComponentTest{
     List<SpecialEntity> currentlyActiveSpecials = specialDao.findActiveSpecials(criteria);
 
     // then
-    assertThat(currentlyActiveSpecials).extracting("id").containsOnly(savedSpecial.getId());
+    assertThat(currentlyActiveSpecials).containsOnly(savedSpecial);
   }
 
   @Test
@@ -167,7 +165,7 @@ public class SpecialDaoTest extends ComponentTest{
     // given
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     LocalDateTime currentDateTime = LocalDateTime.of(2018,2,2,12,0);
-    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = this.prepareSpecialOffer();
+    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = prepareSpecialOffer();
     special.getActivePeriod().setStartingHour(currentDateTime.getHour() - 2);
     special.getActivePeriod().setEndingHour(currentDateTime.getHour());
     special.getActivePeriod().setStartingDay(currentDateTime.getDayOfWeek().minus(1));
@@ -178,7 +176,7 @@ public class SpecialDaoTest extends ComponentTest{
     List<SpecialEntity> currentlyActiveSpecials = specialDao.findActiveSpecials(criteria);
 
     // then
-    assertThat(currentlyActiveSpecials).extracting("id").containsOnly(savedSpecial.getId());
+    assertThat(currentlyActiveSpecials).containsOnly(savedSpecial);
   }
 
   @Test
@@ -186,7 +184,7 @@ public class SpecialDaoTest extends ComponentTest{
     // given
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     LocalDateTime currentDateTime = LocalDateTime.of(2018,2,2,12,0);
-    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = this.prepareSpecialOffer();
+    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = prepareSpecialOffer();
     special.getActivePeriod().setStartingHour(currentDateTime.getHour() - 2);
     special.getActivePeriod().setEndingHour(currentDateTime.getHour());
     special.getActivePeriod().setStartingDay(currentDateTime.getDayOfWeek().minus(2));
@@ -197,7 +195,7 @@ public class SpecialDaoTest extends ComponentTest{
     List<SpecialEntity> currentlyActiveSpecials = specialDao.findActiveSpecials(criteria);
 
     // then
-    assertThat(currentlyActiveSpecials).extracting("id").containsOnly(savedSpecial.getId());
+    assertThat(currentlyActiveSpecials).containsOnly(savedSpecial);
   }
 
   @Test
@@ -205,7 +203,7 @@ public class SpecialDaoTest extends ComponentTest{
     // given
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     LocalDateTime currentDateTime = LocalDateTime.of(2018,2,2,12,0);
-    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = this.prepareSpecialOffer();
+    criteria.setDateOfCheckingOffers(currentDateTime);    SpecialEntity special = prepareSpecialOffer();
     special.getActivePeriod().setStartingHour(currentDateTime.getHour() - 2);
     special.getActivePeriod().setEndingHour(currentDateTime.getHour()+2);
     special.getActivePeriod().setStartingDay(currentDateTime.getDayOfWeek().minus(2));
@@ -216,7 +214,7 @@ public class SpecialDaoTest extends ComponentTest{
     List<SpecialEntity> currentlyActiveSpecials = specialDao.findActiveSpecials(criteria);
 
     // then
-    assertThat(currentlyActiveSpecials).extracting("id").containsOnly(savedSpecial.getId());
+    assertThat(currentlyActiveSpecials).containsOnly(savedSpecial);
   }
 
   @Test
@@ -227,8 +225,9 @@ public class SpecialDaoTest extends ComponentTest{
     searchCriteria.setDateOfCheckingOffers(LocalDateTime.of(2018,2,2,2,0));
 
     // when
-    Money bestSpecialPrice = this.specialDao.findBestActiveSpecial(searchCriteria);
+    Money bestSpecialPrice = specialDao.findBestActiveSpecial(searchCriteria);
 
+    //then
     assertThat(bestSpecialPrice).isNull();
   }
 
@@ -236,7 +235,7 @@ public class SpecialDaoTest extends ComponentTest{
   public void testFindingBestActiveSpecialWhenTwoDifferentExist() {
     // given
     LocalDateTime currentDateTime = LocalDateTime.of(2018,2,2,12,0);
-    OfferEntity offer = this.prepareOffer();
+    OfferEntity offer = prepareOffer();
     SpecialEntity specialWithWorsePrice = this.prepareSpecialWithOffer(offer);
     specialWithWorsePrice.setSpecialPrice(new Money(11));
     this.setSpecialActiveForCurrentDateTime(specialWithWorsePrice, currentDateTime);
@@ -253,6 +252,7 @@ public class SpecialDaoTest extends ComponentTest{
     // when
     Money bestSpecialPrice = this.specialDao.findBestActiveSpecial(searchCriteria);
 
+    //then
     assertThat(bestSpecialPrice).isEqualTo(specialWithBetterPrice.getSpecialPrice());
   }
 
@@ -260,12 +260,12 @@ public class SpecialDaoTest extends ComponentTest{
   public void testFindingBestActiveSpecialWhenTwoEqualtExist() {
     // given
     LocalDateTime currentDateTime = LocalDateTime.of(2018,2,2,12,0);
-    OfferEntity offer = this.prepareOffer();
-    SpecialEntity special1 = this.prepareSpecialWithOffer(offer);
-    this.setSpecialActiveForCurrentDateTime(special1, currentDateTime);
-    SpecialEntity special2 = this.prepareSpecialWithOffer(offer);
+    OfferEntity offer = prepareOffer();
+    SpecialEntity special1 = prepareSpecialWithOffer(offer);
+    setSpecialActiveForCurrentDateTime(special1, currentDateTime);
+    SpecialEntity special2 = prepareSpecialWithOffer(offer);
     special2.setName("Special with same price");
-    this.setSpecialActiveForCurrentDateTime(special2, currentDateTime);
+    setSpecialActiveForCurrentDateTime(special2, currentDateTime);
     specialDao.save(Arrays.asList(special2, special1));
 
     SpecialSearchCriteriaTo searchCriteria = new SpecialSearchCriteriaTo();
@@ -273,8 +273,9 @@ public class SpecialDaoTest extends ComponentTest{
     searchCriteria.setOfferNumber(special2.getOffer().getNumber());
 
     // when
-    Money bestSpecialPrice = this.specialDao.findBestActiveSpecial(searchCriteria);
+    Money bestSpecialPrice = specialDao.findBestActiveSpecial(searchCriteria);
 
+    //then
     assertThat(bestSpecialPrice).isEqualTo(special2.getSpecialPrice());
   }
 

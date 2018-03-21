@@ -24,10 +24,6 @@ public class SpecialSearchCriteriaTo extends SearchCriteriaTo {
 
   private Long offerNumber;
 
-  public SpecialSearchCriteriaTo() {
-    super();
-  }
-
   public String getName() {
     return name;
   }

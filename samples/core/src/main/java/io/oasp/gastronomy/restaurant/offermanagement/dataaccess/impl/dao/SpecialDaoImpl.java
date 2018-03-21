@@ -19,17 +19,8 @@ import static com.querydsl.core.alias.Alias.$;
 @Named
 public class SpecialDaoImpl extends ApplicationMasterDataDaoImpl<SpecialEntity> implements SpecialDao {
 
-  /**
-   * The constructor.
-   */
-  public SpecialDaoImpl() {
-
-    super();
-  }
-
   @Override
   protected Class<SpecialEntity> getEntityClass() {
-
     return SpecialEntity.class;
   }
 
@@ -42,7 +33,7 @@ public class SpecialDaoImpl extends ApplicationMasterDataDaoImpl<SpecialEntity> 
     EntityPathBase<SpecialEntity> alias = $(special);
     JPAQuery<SpecialEntity> query = new JPAQuery<SpecialEntity>(getEntityManager()).from(alias);
 
-    buldQueryForDateInActivePeriod(currentDayOfWeek, currentHour, special, query);
+    buildQueryForDateInActivePeriod(currentDayOfWeek, currentHour, special, query);
 
     return query.fetch();
   }
@@ -56,7 +47,7 @@ public class SpecialDaoImpl extends ApplicationMasterDataDaoImpl<SpecialEntity> 
     if (criteria.getOfferNumber() != null) {
       query.where($(special.getOffer().getNumber()).eq(criteria.getOfferNumber()));
     }
-    this.buldQueryForDateInActivePeriod(currentDateTime.getDayOfWeek(), currentDateTime.getHour(), special, query);
+    buildQueryForDateInActivePeriod(currentDateTime.getDayOfWeek(), currentDateTime.getHour(), special, query);
 
     query.orderBy($(special.getSpecialPrice()).asc());
     SpecialEntity specialEntityWithBestPrice = query.fetchFirst();
@@ -64,7 +55,7 @@ public class SpecialDaoImpl extends ApplicationMasterDataDaoImpl<SpecialEntity> 
     return specialEntityWithBestPrice != null ? specialEntityWithBestPrice.getSpecialPrice() : null;
   }
 
-  private void buldQueryForDateInActivePeriod(DayOfWeek currentDayOfWeek, int currentHour, SpecialEntity special, JPAQuery<SpecialEntity> query) {
+  private void buildQueryForDateInActivePeriod(DayOfWeek currentDayOfWeek, int currentHour, SpecialEntity special, JPAQuery<SpecialEntity> query) {
     query.where($(special.getActivePeriod().getStartingDay()).loe(currentDayOfWeek));
     query.where($(special.getActivePeriod().getEndingDay()).goe(currentDayOfWeek));
     query.where($(special.getActivePeriod().getStartingHour()).loe(currentHour));
