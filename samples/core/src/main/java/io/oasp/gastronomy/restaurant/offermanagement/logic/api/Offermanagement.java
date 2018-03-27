@@ -13,6 +13,8 @@ import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductFilter;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.ProductSortBy;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SideDishEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialSearchCriteriaTo;
 import io.oasp.module.jpa.common.api.to.PaginatedListTo;
 
 import java.sql.Blob;
@@ -89,6 +91,12 @@ public interface Offermanagement {
    * @return the generated/updated offer
    */
   OfferEto saveOffer(@Valid OfferEto offer);
+  
+  SpecialEto saveSpecial(@Valid SpecialEto specialEto);
+  
+  void deleteSpecial(Long id);
+  
+  List<SpecialEto> getActiveSpecials(SpecialSearchCriteriaTo searchCriteria);
 
   /**
    * Gets a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Product} using its entity identifier.

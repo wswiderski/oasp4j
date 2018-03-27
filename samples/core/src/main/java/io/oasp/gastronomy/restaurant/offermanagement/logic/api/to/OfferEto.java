@@ -3,6 +3,7 @@ package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
 import io.oasp.gastronomy.restaurant.general.common.api.datatype.validation.NotNegativeMoney;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.Offer;
+import io.oasp.gastronomy.restaurant.offermanagement.common.api.Special;
 import io.oasp.gastronomy.restaurant.offermanagement.common.api.datatype.OfferState;
 
 /**
@@ -25,6 +26,8 @@ public class OfferEto extends MenuItemEto implements Offer {
   private Long sideDishId;
 
   private OfferState state;
+  
+  private Money special;
 
   /**
    * The constructor.
@@ -104,5 +107,13 @@ public class OfferEto extends MenuItemEto implements Offer {
   public void setState(OfferState state) {
 
     this.state = state;
+  }
+
+  public Money getSpecial() {
+    return special;
+}
+
+  public void setSpecial(Money special) {
+    this.special = special;
   }
 }

@@ -16,8 +16,6 @@ public class SpecialSearchCriteriaTo extends SearchCriteriaTo {
 
   private String name;
 
-  private OfferEntity offer;
-
   private LocalDateTime dateOfCheckingOffers;
 
   private Money specialPrice;
@@ -30,14 +28,6 @@ public class SpecialSearchCriteriaTo extends SearchCriteriaTo {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public OfferEntity getOffer() {
-    return offer;
-  }
-
-  public void setOffer(OfferEntity offer) {
-    this.offer = offer;
   }
 
   public LocalDateTime getDateOfCheckingOffers() {
