@@ -300,6 +300,9 @@ public class SpecialDaoTest extends ComponentTest{
     WeeklyPeriodEmbeddable activePeriod = new WeeklyPeriodEmbeddable();
     activePeriod.setEndingHour(14);
     activePeriod.setStartingHour(6);
+    LocalDateTime currentDateTime = LocalDateTime.now();
+    activePeriod.setStartingDay(currentDateTime.getDayOfWeek().minus(1));
+    activePeriod.setEndingDay(currentDateTime.getDayOfWeek().plus(2));
     special.setActivePeriod(activePeriod);
     special.setOffer(offer);
     return special;
