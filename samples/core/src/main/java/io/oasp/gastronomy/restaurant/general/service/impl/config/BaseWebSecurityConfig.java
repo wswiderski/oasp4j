@@ -19,7 +19,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import io.oasp.gastronomy.restaurant.general.common.impl.security.CsrfRequestMatcher;
 import io.oasp.module.security.common.impl.rest.AuthenticationSuccessHandlerSendingOkHttpStatusCode;
 import io.oasp.module.security.common.impl.rest.JsonUsernamePasswordAuthenticationFilter;
 import io.oasp.module.security.common.impl.rest.LogoutSuccessHandlerReturningOkHttpStatusCode;
@@ -137,9 +136,12 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Inject
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-    auth.inMemoryAuthentication().withUser("waiter").password("waiter").roles("Waiter").and().withUser("cook")
-        .password("cook").roles("Cook").and().withUser("barkeeper").password("barkeeper").roles("Barkeeper").and()
-        .withUser("chief").password("chief").roles("Chief");
+    auth.inMemoryAuthentication()
+      .withUser("waiter").password("waiter").roles("Waiter").and()
+      .withUser("cook").password("cook").roles("Cook").and()
+      .withUser("barkeeper").password("barkeeper").roles("Barkeeper").and()
+      .withUser("chief").password("chief").roles("Chief").and()
+      .withUser("manager").password("manager").roles("Manager");
   }
 
 }

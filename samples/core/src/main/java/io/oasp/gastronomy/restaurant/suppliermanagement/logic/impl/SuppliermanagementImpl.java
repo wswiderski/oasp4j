@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.oasp.gastronomy.restaurant.general.common.api.constants.PermissionConstants;
 import io.oasp.gastronomy.restaurant.general.logic.base.AbstractComponentFacade;
 import io.oasp.gastronomy.restaurant.suppliermanagement.dataaccess.api.SupplierEntity;
 import io.oasp.gastronomy.restaurant.suppliermanagement.dataaccess.api.dao.SupplierDao;
@@ -43,6 +45,7 @@ public class SuppliermanagementImpl extends AbstractComponentFacade implements S
   }
 
   @Override
+  @RolesAllowed(PermissionConstants.FIND_SUPPLIERS)
   public SupplierEto findSupplier(Long id) {
 
     LOG.debug("Get Supplier with id {} from database.", id);
@@ -50,6 +53,7 @@ public class SuppliermanagementImpl extends AbstractComponentFacade implements S
   }
 
   @Override
+  @RolesAllowed(PermissionConstants.FIND_SUPPLIERS)
   public PaginatedListTo<SupplierEto> findSupplierEtos(SupplierSearchCriteriaTo criteria) {
 
     criteria.limitMaximumPageSize(MAXIMUM_HIT_LIMIT);
@@ -81,7 +85,7 @@ public class SuppliermanagementImpl extends AbstractComponentFacade implements S
 
   /**
    * Returns the field 'supplierDao'.
-   * 
+   *
    * @return the {@link SupplierDao} instance.
    */
   public SupplierDao getSupplierDao() {

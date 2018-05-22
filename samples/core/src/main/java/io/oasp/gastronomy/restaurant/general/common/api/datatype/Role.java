@@ -13,6 +13,7 @@ import java.security.Principal;
 public enum Role implements Principal {
 
   // BEGIN ARCHETYPE SKIP
+
   /**
    * AccessControlGroup of a cook who works in the kitchen and can see the orders with their positions. He prepares the
    * menus and side-dishes and can mark order-positions as prepared.
@@ -35,8 +36,14 @@ public enum Role implements Principal {
    * AccessControlGroup of a chief on the restaurant who can manage the master-data such as offers, products, and other
    * {@link io.oasp.gastronomy.restaurant.staffmanagement.common.api.StaffMember}s.
    */
+  CHIEF("Chief"),
+
+  /**
+   * AccessControlGroup of a manager who manage restaurant and it suppliers.
+   */
+  MANAGER("Manager");
+
   // END ARCHETYPE SKIP
-  CHIEF("Chief");
 
   private final String name;
 
