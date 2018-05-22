@@ -415,8 +415,10 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
 		PaginatedListTo<OfferEto> result = mapPaginatedEntityList(offers, OfferEto.class);
 		for (OfferEto offer : result.getResult()) {
 			Money special = findBestSpecialForOfferNow(offer.getNumber());
-			offer.setSpecial(special);
-			offer.setPrice(offer.getPrice().subtract(special));
+			if(special != null) {
+    			offer.setSpecial(special);
+    			offer.setPrice(offer.getPrice().subtract(special));
+			}
 		}
 		return result;
 	}
