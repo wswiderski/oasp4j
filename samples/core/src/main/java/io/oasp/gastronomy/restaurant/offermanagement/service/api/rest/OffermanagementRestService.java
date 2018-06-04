@@ -17,6 +17,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialSearchCriteriaTo;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
 
@@ -282,4 +284,46 @@ public interface OffermanagementRestService extends RestService {
   @Path("/product/search")
   @POST
   public PaginatedListTo<ProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo);
+
+  /**
+   * Delegates to {@link Offermanagement#findSpecial}.
+   *
+   * @param id the ID of the {@link SpecialEto}
+   * @return the {@link SpecialEto}
+   */
+  @GET
+  @Path("/special/{id}")
+  SpecialEto getSpecial(@PathParam("id") long id);
+
+  /**
+   * Delegates to {@link Offermanagement#saveSpecial}.
+   *
+   * @param special the {@link SpecialEto} to save
+   *
+   * @return the saved {@link SpecialEto}
+   */
+  @POST
+  @Path("/special/")
+  public SpecialEto saveSpecial(SpecialEto special);
+
+  /**
+   * Delegates to {@link Offermanagement#saveSpecial}.
+   *
+   * @param special the {@link SpecialEto} to save
+   *
+   * @return the saved {@link SpecialEto}
+   */
+  @PUT
+  @Path("/special/")
+  public SpecialEto updateSpecial(SpecialEto special);
+
+  /**
+   * Delegates to {@link Offermanagement#deleteSpecial}.
+   *
+   * @param id ID of the {@link SpecialEto} to delete
+   */
+  @DELETE
+  @Path("/special/{id}")
+  void deleteSpecial(@PathParam("id") long id);
+
 }

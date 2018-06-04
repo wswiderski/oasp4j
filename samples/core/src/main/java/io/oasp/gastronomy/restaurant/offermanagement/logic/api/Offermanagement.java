@@ -228,4 +228,12 @@ public interface Offermanagement {
    */
   void deleteProductPicture(Long productId);
 
+  /**
+   * Gets a {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Special} using its entity identifier.
+   *
+   * @param id is the {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Special#getId() product ID}.
+   * @return the requested {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Special} or {@code null} if no
+   *         such {@link io.oasp.gastronomy.restaurant.offermanagement.common.api.Special} exists.
+   */
+  SpecialEto findSpecial(Long id);
 }

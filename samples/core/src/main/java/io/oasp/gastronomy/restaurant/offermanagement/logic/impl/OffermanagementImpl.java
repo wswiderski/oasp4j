@@ -549,4 +549,14 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
 		return getBeanMapper().mapList(specialDao.findActiveSpecials(searchCriteria), SpecialEto.class);
 	}
 
+  @Override
+  public SpecialEto findSpecial(Long id) {
+    LOG.debug("Get Special with id '" + id + "' from database.");
+    SpecialEntity special = specialDao.findOne(id);
+    if (special == null) {
+      return null;
+    } else {
+      return getBeanMapper().map(special, SpecialEto.class);
+    }
+  }
 }

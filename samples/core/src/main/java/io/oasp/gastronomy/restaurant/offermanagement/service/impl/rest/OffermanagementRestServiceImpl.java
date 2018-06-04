@@ -15,6 +15,8 @@ import javax.sql.rowset.serial.SerialException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialEto;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialSearchCriteriaTo;
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Attachment;
 import org.apache.cxf.jaxrs.ext.multipart.MultipartBody;
@@ -221,6 +223,26 @@ public class OffermanagementRestServiceImpl implements OffermanagementRestServic
   public PaginatedListTo<ProductEto> findProductEtosByPost(ProductSearchCriteriaTo searchCriteriaTo) {
 
     return this.offermanagement.findProductEtos(searchCriteriaTo);
+  }
+
+  @Override
+  public SpecialEto getSpecial(long id) {
+    return this.offermanagement.findSpecial(id);
+  }
+
+  @Override
+  public SpecialEto saveSpecial(SpecialEto special) {
+    return this.offermanagement.saveSpecial(special);
+  }
+
+  @Override
+  public SpecialEto updateSpecial(SpecialEto special) {
+    return this.offermanagement.saveSpecial(special);
+  }
+
+  @Override
+  public void deleteSpecial(long id) {
+    this.offermanagement.deleteSpecial(id);
   }
 
 }

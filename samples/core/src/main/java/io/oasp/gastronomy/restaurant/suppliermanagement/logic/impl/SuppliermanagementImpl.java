@@ -8,6 +8,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.OfferDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +34,18 @@ public class SuppliermanagementImpl extends AbstractComponentFacade implements S
   private static final Logger LOG = LoggerFactory.getLogger(SuppliermanagementImpl.class);
 
   /** @see #getSupplierDao() */
-  @Inject
   private SupplierDao supplierDao;
+
+  /**
+   * Sets the field 'offerDao'.
+   *
+   * @param offerDao New value for offerDao
+   */
+  @Inject
+  public void setSupplierDao(SupplierDao offerDao) {
+
+    this.supplierDao = offerDao;
+  }
 
   /**
    * The constructor.

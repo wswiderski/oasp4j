@@ -151,4 +151,11 @@ CREATE TABLE Special(
     CONSTRAINT UC_Special_name UNIQUE(name)
 );
 
+CREATE TABLE Supplier(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    modificationCounter INTEGER NOT NULL,
+    name VARCHAR(255),
+    description VARCHAR(255),
+    rate INTEGER,
+)
 
