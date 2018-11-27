@@ -111,18 +111,24 @@ public class SpecialDaoTest extends ComponentTest {
     assertTrue(results.isEmpty());
   }
 
-  private SpecialEntity createSpecialEntity(String name) {
+  private SpecialEntity createSpecialEntity(String name, DayOfWeek startingDay, DayOfWeek endingDay, int startingHour,
+      int endingHour) {
 
     WeeklyPeriodEmbeddable weeklyPeriod = new WeeklyPeriodEmbeddable();
-    weeklyPeriod.setEndingDay(DayOfWeek.WEDNESDAY);
-    weeklyPeriod.setStartingDay(DayOfWeek.MONDAY);
-    weeklyPeriod.setEndingHour(22);
-    weeklyPeriod.setStartingHour(10);
+    weeklyPeriod.setEndingDay(endingDay);
+    weeklyPeriod.setStartingDay(startingDay);
+    weeklyPeriod.setEndingHour(endingHour);
+    weeklyPeriod.setStartingHour(startingHour);
     Money specialPrice = new Money(BigDecimal.TEN);
     SpecialEntity se = new SpecialEntity();
     se.setName(name);
     se.setActivePeriod(weeklyPeriod);
     se.setSpecialPrice(specialPrice);
     return se;
+  }
+
+  private SpecialEntity createSpecialEntity(String name) {
+
+    return createSpecialEntity(name, DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, 10, 22);
   }
 }
