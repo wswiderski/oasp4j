@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,9 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 import io.oasp.gastronomy.restaurant.SpringBootApp;
-import io.oasp.gastronomy.restaurant.general.common.api.datatype.Money;
+import io.oasp.gastronomy.restaurant.offermanagement.SpecialCreatorUtil;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.SpecialEntity;
-import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.WeeklyPeriodEmbeddable;
 import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialSearchCriteriaTo;
 import io.oasp.module.test.common.base.ComponentTest;
 
@@ -43,7 +41,7 @@ public class SpecialDaoTest extends ComponentTest {
   public void shpuldSaveSpecialEntityAndSetId() {
 
     // given
-    SpecialEntity se = createSpecialEntity("Andrzej");
+    SpecialEntity se = SpecialCreatorUtil.createSpecialEntity("Andrzej");
 
     // when
     SpecialEntity savedSpecialEntity = this.specialDao.save(se);
@@ -59,8 +57,8 @@ public class SpecialDaoTest extends ComponentTest {
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     criteria.setName("Andrzej");
 
-    SpecialEntity specialEntity1 = createSpecialEntity("Andrzej");
-    SpecialEntity specialEntity2 = createSpecialEntity("Dominik");
+    SpecialEntity specialEntity1 = SpecialCreatorUtil.createSpecialEntity("Andrzej");
+    SpecialEntity specialEntity2 = SpecialCreatorUtil.createSpecialEntity("Dominik");
     this.entityManager.merge(specialEntity1);
     this.entityManager.merge(specialEntity2);
     this.entityManager.flush();
@@ -81,8 +79,8 @@ public class SpecialDaoTest extends ComponentTest {
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     criteria.setName("Andrzej");
 
-    SpecialEntity specialEntity1 = createSpecialEntity("Andrzej");
-    SpecialEntity specialEntity2 = createSpecialEntity("Dominik");
+    SpecialEntity specialEntity1 = SpecialCreatorUtil.createSpecialEntity("Andrzej");
+    SpecialEntity specialEntity2 = SpecialCreatorUtil.createSpecialEntity("Dominik");
     this.entityManager.merge(specialEntity1);
     this.entityManager.merge(specialEntity2);
     this.entityManager.flush();
@@ -103,8 +101,8 @@ public class SpecialDaoTest extends ComponentTest {
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     criteria.setName("Lukasz");
 
-    SpecialEntity specialEntity1 = createSpecialEntity("Andrzej");
-    SpecialEntity specialEntity2 = createSpecialEntity("Dominik");
+    SpecialEntity specialEntity1 = SpecialCreatorUtil.createSpecialEntity("Andrzej");
+    SpecialEntity specialEntity2 = SpecialCreatorUtil.createSpecialEntity("Dominik");
     this.entityManager.merge(specialEntity1);
     this.entityManager.merge(specialEntity2);
     this.entityManager.flush();
@@ -124,8 +122,10 @@ public class SpecialDaoTest extends ComponentTest {
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     criteria.setDate(LocalDateTime.of(2018, 11, 27, 13, 00)); // Tuesday
 
-    SpecialEntity specialEntity1 = createSpecialEntity("Andrzej", DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, 10, 15);
-    SpecialEntity specialEntity2 = createSpecialEntity("Dominik", DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, 10, 15);
+    SpecialEntity specialEntity1 = SpecialCreatorUtil.createSpecialEntity("Andrzej", DayOfWeek.MONDAY,
+        DayOfWeek.WEDNESDAY, 10, 15);
+    SpecialEntity specialEntity2 = SpecialCreatorUtil.createSpecialEntity("Dominik", DayOfWeek.THURSDAY,
+        DayOfWeek.FRIDAY, 10, 15);
     this.entityManager.merge(specialEntity1);
     this.entityManager.merge(specialEntity2);
     this.entityManager.flush();
@@ -146,8 +146,10 @@ public class SpecialDaoTest extends ComponentTest {
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     criteria.setDate(LocalDateTime.of(2018, 11, 30, 15, 00)); // Friday
 
-    SpecialEntity specialEntity1 = createSpecialEntity("Andrzej", DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, 10, 15);
-    SpecialEntity specialEntity2 = createSpecialEntity("Dominik", DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, 10, 15);
+    SpecialEntity specialEntity1 = SpecialCreatorUtil.createSpecialEntity("Andrzej", DayOfWeek.MONDAY,
+        DayOfWeek.WEDNESDAY, 10, 15);
+    SpecialEntity specialEntity2 = SpecialCreatorUtil.createSpecialEntity("Dominik", DayOfWeek.THURSDAY,
+        DayOfWeek.FRIDAY, 10, 15);
     this.entityManager.merge(specialEntity1);
     this.entityManager.merge(specialEntity2);
     this.entityManager.flush();
@@ -168,8 +170,10 @@ public class SpecialDaoTest extends ComponentTest {
     SpecialSearchCriteriaTo criteria = new SpecialSearchCriteriaTo();
     criteria.setDate(LocalDateTime.of(2018, 12, 1, 15, 00)); // Saturday
 
-    SpecialEntity specialEntity1 = createSpecialEntity("Andrzej", DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, 10, 15);
-    SpecialEntity specialEntity2 = createSpecialEntity("Dominik", DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, 10, 15);
+    SpecialEntity specialEntity1 = SpecialCreatorUtil.createSpecialEntity("Andrzej", DayOfWeek.MONDAY,
+        DayOfWeek.WEDNESDAY, 10, 15);
+    SpecialEntity specialEntity2 = SpecialCreatorUtil.createSpecialEntity("Dominik", DayOfWeek.THURSDAY,
+        DayOfWeek.FRIDAY, 10, 15);
     this.entityManager.merge(specialEntity1);
     this.entityManager.merge(specialEntity2);
     this.entityManager.flush();
@@ -182,24 +186,4 @@ public class SpecialDaoTest extends ComponentTest {
     assertEquals(0, results.size());
   }
 
-  private SpecialEntity createSpecialEntity(String name, DayOfWeek startingDay, DayOfWeek endingDay, int startingHour,
-      int endingHour) {
-
-    WeeklyPeriodEmbeddable weeklyPeriod = new WeeklyPeriodEmbeddable();
-    weeklyPeriod.setEndingDay(endingDay);
-    weeklyPeriod.setStartingDay(startingDay);
-    weeklyPeriod.setEndingHour(endingHour);
-    weeklyPeriod.setStartingHour(startingHour);
-    Money specialPrice = new Money(BigDecimal.TEN);
-    SpecialEntity se = new SpecialEntity();
-    se.setName(name);
-    se.setActivePeriod(weeklyPeriod);
-    se.setSpecialPrice(specialPrice);
-    return se;
-  }
-
-  private SpecialEntity createSpecialEntity(String name) {
-
-    return createSpecialEntity(name, DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, 10, 22);
-  }
 }
