@@ -25,6 +25,11 @@
       <permission id="SaveTable"/>
     </permissions>
   </group>
+   <group id="Manager" type="role">
+    <permissions>
+      <permission id="FindSuppliers"/>
+    </permissions>
+  </group>
   <group id="Barkeeper" type="role">
     <inherits>
       <group-ref>Cook</group-ref>
