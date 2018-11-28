@@ -149,3 +149,14 @@ CREATE TABLE Special(
     CONSTRAINT PK_Special PRIMARY KEY(id),
     CONSTRAINT UC_Special_name UNIQUE(name)
 );
+
+CREATE TABLE Supplier(
+    id BIGINT NOT NULL,
+    modificationCounter INTEGER NOT NULL,
+    name VARCHAR(255),
+    description VARCHAR(255),
+    rate INTEGER,
+    CONSTRAINT PK_Supplier PRIMARY KEY(id),
+    CONSTRAINT UC_Supplier_name UNIQUE(name)
+);
+
