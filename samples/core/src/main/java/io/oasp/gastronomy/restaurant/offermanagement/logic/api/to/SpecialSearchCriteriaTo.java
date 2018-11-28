@@ -1,4 +1,4 @@
-package io.oasp.gastronomy.restaurant.general.common.api.to;
+package io.oasp.gastronomy.restaurant.offermanagement.logic.api.to;
 
 import java.time.LocalDateTime;
 

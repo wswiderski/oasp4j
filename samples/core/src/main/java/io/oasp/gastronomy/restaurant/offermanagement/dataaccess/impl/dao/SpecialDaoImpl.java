@@ -8,16 +8,15 @@ import java.util.List;
 
 import javax.inject.Named;
 
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.alias.Alias;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 
-import io.oasp.gastronomy.restaurant.general.common.api.to.SpecialSearchCriteriaTo;
 import io.oasp.gastronomy.restaurant.general.dataaccess.base.dao.ApplicationMasterDataDaoImpl;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.SpecialEntity;
 import io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.dao.SpecialDao;
+import io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialSearchCriteriaTo;
 
 /**
  * @author WSWIDERS
@@ -55,13 +54,11 @@ public class SpecialDaoImpl extends ApplicationMasterDataDaoImpl<SpecialEntity> 
       DayOfWeek day = date.getDayOfWeek();
       int hour = date.getHour();
 
-      BooleanBuilder builder = new BooleanBuilder();
-      builder.or($(special.getActivePeriod().getEndingDay()).loe(day)
-          .and($(special.getActivePeriod().getStartingDay()).goe(day)));
+      query.where($(special.getActivePeriod().getEndingDay()).goe(day));
+      query.where($(special.getActivePeriod().getStartingDay()).loe(day));
 
-      builder.or($(special.getActivePeriod().getEndingHour()).loe(hour)
-          .and($(special.getActivePeriod().getStartingHour()).goe(hour)));
-      query.where(builder);
+      query.where($(special.getActivePeriod().getEndingHour()).goe(hour));
+      query.where($(special.getActivePeriod().getStartingHour()).loe(hour));
     }
 
     List<SpecialEntity> result = query.fetch();
