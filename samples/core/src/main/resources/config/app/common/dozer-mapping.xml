@@ -44,7 +44,9 @@
     <class-b>io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.SpecialEntity</class-b>
     <field>
       <a>offerId</a>
-      <b>id</b>
+      <b>offer.id</b>
+      <a-hint>java.lang.Long</a-hint>
+    <b-hint>io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity</b-hint>
     </field>
   </mapping>
   <!-- END ARCHETYPE SKIP -->

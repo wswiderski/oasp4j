@@ -454,6 +454,15 @@ public class OffermanagementImpl extends AbstractComponentFacade implements Offe
   public SpecialEto saveSpecial(SpecialEto special) {
 
     SpecialEntity specialToSave = getBeanMapper().map(special, SpecialEntity.class);
+
+    Long offerId = special.getOfferId();
+    if (offerId != null) {
+      OfferEntity offer = this.offerDao.find(offerId);
+      if (offer != null) {
+        specialToSave.setOffer(offer);
+      }
+    }
+
     SpecialEntity savedSpecial = this.specialDao.save(specialToSave);
     return getBeanMapper().map(savedSpecial, SpecialEto.class);
   }
