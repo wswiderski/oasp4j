@@ -39,6 +39,14 @@
     <class-a>io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.OfferEto</class-a>
     <class-b>io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.OfferEntity</class-b>
   </mapping>
+  <mapping>
+    <class-a>io.oasp.gastronomy.restaurant.offermanagement.logic.api.to.SpecialEto</class-a>
+    <class-b>io.oasp.gastronomy.restaurant.offermanagement.dataaccess.api.SpecialEntity</class-b>
+    <field>
+      <a>offerId</a>
+      <b>id</b>
+    </field>
+  </mapping>
   <!-- END ARCHETYPE SKIP -->
 
   <!-- If a persistence entity is converted to an ETO then the original entity is stored as hidden reference.
